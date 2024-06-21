@@ -1,12 +1,13 @@
-namespace XRun.Models;
+namespace XRun.Dtos;
 
-public class User
+public class LoginDto
 {
-    public Guid Id { get; } = Guid.NewGuid();
     public string Login { get; set; }
     public string Password { get; set; }
     
-    public User(string login, string password)
+    public LoginDto() { }
+    
+    public LoginDto(string login, string password)
     {
         Login = login;
         Password = password;

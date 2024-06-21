@@ -6,7 +6,6 @@ namespace XRun.Models;
 
 public class Client : User
 {
-    public Guid Id { get; } = Guid.NewGuid();
     public static List<Client> Clients { get; } = new();
     public string Name { get; set; }
     public string Surname { get; set; }
@@ -19,7 +18,7 @@ public class Client : User
     public List<Training> Trainings { get; set; } = new List<Training>();
 
     public Client(string name, string surname, DateTime birthDate, bool sex, HealthInformation? healthInformation,
-        Localization localization)
+        Localization localization, string login, string password) : base(login, password)
     {
         Name = name;
         Surname = surname;

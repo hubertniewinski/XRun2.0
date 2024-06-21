@@ -1,0 +1,13 @@
+<ng-container *ngIf="!authService.isLoggedIn()">
+    <div [formGroup]="formGroup">
+        <div class="flex">
+            <label for="login">Login</label>
+            <input id="login" type="text" pInputText formControlName="login" />
+
+            <label for="password">Password</label>
+            <p-password id="password" formControlName="password" [feedback]="false" />
+
+            <p-button label="Login" (onClick)="login()" />
+        </div>
+    </div>
+</ng-container>

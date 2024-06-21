@@ -1,4 +1,5 @@
-<p-table [value]="assignedChats" styleClass="p-datatable-striped">
+<div *ngIf="hasViewPermission">
+  <p-table [value]="assignedChats" styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
       <tr>
         <th>Type</th>
@@ -11,7 +12,8 @@
     </ng-template>
   </p-table>
 
-<p-button (click)="showDialog()" label="Assign new chat"/>
+  <p-button *ngIf="hasAssignChatPermission" (click)="showDialog()" label="Assign new chat"/>
+</div>
 
 <p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ height: '25rem', width: '25rem' }">
     <h1>Assign new chat</h1>
@@ -31,5 +33,3 @@
     <p-button label="Go back" (onClick)="this.visible = false" />
     <p-button [disabled]="!selectedChat" label="Assign selected chat" (onClick)="assignChat()" />
 </p-dialog>
-
-<p-toast />

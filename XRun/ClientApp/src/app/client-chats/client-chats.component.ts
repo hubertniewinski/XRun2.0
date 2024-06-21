@@ -1,20 +1,22 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-client-chats',
   templateUrl: './client-chats.component.html',
-  styleUrls: ['./client-chats.component.scss'],
-  providers: [MessageService]
+  styleUrls: ['./client-chats.component.scss']
 })
 export class ClientChatsComponent implements OnInit {
   constructor(
     private readonly http: HttpClient,
     @Inject('BASE_URL') private readonly baseUrl: string,
     private readonly route: ActivatedRoute,
-    private readonly messageService: MessageService
+    private readonly messageService: MessageService,
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) {}
 
   id: string | null = null;
@@ -26,16 +28,26 @@ export class ClientChatsComponent implements OnInit {
   selectedChat: any | undefined;
   visible: boolean = false;
 
+  hasViewPermission: boolean = false;
+  hasAssignChatPermission: boolean = false;
+
   ngOnInit(): void {
+    if(!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
+      this.hasViewPermission = this.authService.isAdmin() || this.authService.getId() == this.id;
+      this.hasAssignChatPermission = this.authService.isAdmin();
+
       this.loadDetails();
     });
   }
 
   loadDetails() {
     this.http
-    .get<string[]>(this.baseUrl + 'api/clients/' + this.id + '/assignedChats')
+    .get<string[]>(this.baseUrl + 'api/clients/' + this.id + '/assignedChats?token=' + this.authService.getToken())
     .subscribe(
       (result) => {
         this.assignedChats = result;
@@ -50,7 +62,7 @@ export class ClientChatsComponent implements OnInit {
     this.error = undefined;
 
     this.http
-    .get<string[]>(this.baseUrl + 'api/aichats/availableChats')
+    .get<string[]>(this.baseUrl + 'api/aichats/availableChats?token=' + this.authService.getToken())
     .subscribe(
       (result) => {
         this.availableChats = result.map(x => ({
@@ -58,7 +70,9 @@ export class ClientChatsComponent implements OnInit {
           value: x
         }));
       },
-      (error) => console.error(error)
+      (error) => {
+        this.messageService.add({severity:'error', summary:'Error', detail:error.error});
+      }
     );
   }
 
@@ -84,7 +98,10 @@ export class ClientChatsComponent implements OnInit {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     this.http
     .post<string[]>(this.baseUrl + 'api/clients/assignChat/' + this.id, 
-      JSON.stringify(chatType), { headers })
+      {
+        Token: this.authService.getToken(),
+        ChatType: chatType
+      }, { headers })
     .subscribe(
       (result) => {
         this.messageService.add({severity:'success', summary:'Success', detail:'Chat assigned successfully'});
