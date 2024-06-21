@@ -25,6 +25,9 @@
         (completeMethod)="filterChat($event)" 
         field="value" />
 
+    <div style="color: red" *ngIf="error">
+      {{error}}
+    </div>
     <p-button label="Go back" (onClick)="this.visible = false" />
     <p-button [disabled]="!selectedChat" label="Assign selected chat" (onClick)="assignChat()" />
 </p-dialog>
