@@ -17,6 +17,7 @@ import { ClientChatsComponent } from './client-chats/client-chats.component';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ButtonModule,
     DialogModule,
     BrowserAnimationsModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ToastModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

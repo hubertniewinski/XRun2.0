@@ -1,17 +1,20 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-client-chats',
   templateUrl: './client-chats.component.html',
   styleUrls: ['./client-chats.component.css'],
+  providers: [MessageService]
 })
 export class ClientChatsComponent implements OnInit {
   constructor(
     private readonly http: HttpClient,
     @Inject('BASE_URL') private readonly baseUrl: string,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly messageService: MessageService
   ) {}
 
   id: string | null = null;
@@ -77,7 +80,8 @@ export class ClientChatsComponent implements OnInit {
       JSON.stringify(chatType), { headers })
     .subscribe(
       (result) => {
-        console.log('SUCCESS!!!');
+        this.messageService.add({severity:'success', summary:'Success', detail:'Chat assigned successfully'});
+        this.visible = false;
       },
       (error) => console.error(error)
     );
