@@ -29,20 +29,25 @@ export class ClientChatsComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
-      this.http
-        .get<string[]>(this.baseUrl + 'api/clients/' + this.id + '/assignedChats')
-        .subscribe(
-          (result) => {
-            this.assignedChats = result;
-          },
-          (error) => console.error(error)
-        );
+      this.loadDetails();
     });
+  }
+
+  loadDetails() {
+    this.http
+    .get<string[]>(this.baseUrl + 'api/clients/' + this.id + '/assignedChats')
+    .subscribe(
+      (result) => {
+        this.assignedChats = result;
+      },
+      (error) => console.error(error)
+    );
   }
 
   showDialog() {
     this.selectedChat = undefined;
     this.visible = true;
+    this.error = undefined;
 
     this.http
     .get<string[]>(this.baseUrl + 'api/aichats/availableChats')
@@ -52,7 +57,6 @@ export class ClientChatsComponent implements OnInit {
           label: x,
           value: x
         }));
-        console.log(this.availableChats);
       },
       (error) => console.error(error)
     );
@@ -72,7 +76,10 @@ export class ClientChatsComponent implements OnInit {
     this.filteredChats = filtered;
   }
 
+  error: string | undefined;
+
   assignChat() {
+    this.error = undefined;
     const chatType = this.selectedChat.value;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     this.http
@@ -82,8 +89,11 @@ export class ClientChatsComponent implements OnInit {
       (result) => {
         this.messageService.add({severity:'success', summary:'Success', detail:'Chat assigned successfully'});
         this.visible = false;
+        this.loadDetails();
       },
-      (error) => console.error(error)
+      (error) => {
+        this.error = error.error;
+      }
     );
   }
 }
