@@ -1,0 +1,30 @@
+<p-table [value]="assignedChats" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Type</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-chatType>
+      <tr>
+        <td>{{ chatType }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+<p-button (click)="showDialog()" label="Assign new chat"/>
+
+<p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ height: '25rem', width: '25rem' }">
+    <h1>Assign new chat</h1>
+    Select one chat from list below
+
+    <p-autoComplete
+        [(ngModel)]="selectedChat"
+        [forceSelection]="true" 
+        [dropdown]="true" 
+        [suggestions]="filteredChats" 
+        (completeMethod)="filterChat($event)" 
+        field="value" />
+
+    <p-button label="Go back" />
+    <p-button [disabled]="!selectedChat" label="Assign selected chat" (onClick)="assignChat()" />
+</p-dialog>

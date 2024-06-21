@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using XRun.Data;
 using XRun.Models;
+using XRun.Seed;
 
+var seed = new Seed();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
