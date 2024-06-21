@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.css']
+  styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent {
   public clients: ClientDashboardDto[] = [];

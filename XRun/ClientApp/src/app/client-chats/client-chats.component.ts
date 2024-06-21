@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-client-chats',
   templateUrl: './client-chats.component.html',
-  styleUrls: ['./client-chats.component.css'],
+  styleUrls: ['./client-chats.component.scss'],
   providers: [MessageService]
 })
 export class ClientChatsComponent implements OnInit {
