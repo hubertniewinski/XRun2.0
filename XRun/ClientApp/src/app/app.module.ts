@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
@@ -23,7 +22,6 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
     FetchDataComponent,
     ClientsComponent,
     ClientChatsComponent
@@ -34,7 +32,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: ClientsComponent, pathMatch: 'full' },
       { path: 'clients', component: ClientsComponent },
       { path: 'clients/:id/assignedChats', component: ClientChatsComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },

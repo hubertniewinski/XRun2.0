@@ -38,6 +38,7 @@ export class ClientChatsComponent implements OnInit {
   }
 
   showDialog() {
+    this.selectedChat = undefined;
     this.visible = true;
 
     this.http

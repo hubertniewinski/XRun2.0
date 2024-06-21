@@ -25,6 +25,6 @@
         (completeMethod)="filterChat($event)" 
         field="value" />
 
-    <p-button label="Go back" />
+    <p-button label="Go back" (onClick)="this.visible = false" />
     <p-button [disabled]="!selectedChat" label="Assign selected chat" (onClick)="assignChat()" />
 </p-dialog>
