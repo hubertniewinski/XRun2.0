@@ -10,8 +10,20 @@ export class AppComponent {
 
   constructor(private router: Router) { }
 
-  isLoginView() {
-    const path = this.router.url.split('/').pop();
-    return path == 'login';
+  getContainerClass() {
+    const path = this.getPath();
+
+    if(path == 'login'){
+      return 'login-content-container';
+    }
+    else if(path == '') {
+      return 'home-content-container';
+    }
+
+    return 'content-container';
+  }
+
+  private getPath() {
+    return this.router.url.split('/').pop();
   }
 }
