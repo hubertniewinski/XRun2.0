@@ -36,7 +36,7 @@ public class ClientsController : ControllerBase
     [HttpPost("assignChat/{clientId}")]
     public Task<IActionResult> AssignChatAsync([FromRoute] Guid clientId, [FromBody] AssignChatDto assignChatDto)
     {
-        AuthService.ValidateAdmin(assignChatDto.Token);
+        var admin = AuthService.GetAdmin(assignChatDto.Token);
         
         var client = Client.Clients.FirstOrDefault(x => x.Id == clientId);
         if (client is null)
@@ -56,7 +56,7 @@ public class ClientsController : ControllerBase
             return Task.FromResult<IActionResult>(Conflict("Client already owns this chat"));
         }
         
-        client.AddAIChat(chat);
+        admin.AssignChat(client, chat);
         return Task.FromResult<IActionResult>(Ok());
     }
 }

@@ -14,6 +14,16 @@ public static class AuthService
         }
     }
     
+    public static Administrator GetAdmin(Guid token)
+    {
+        if (!IsAdmin(token))
+        {
+            throw new UnauthorizedAccessException();
+        }
+        
+        return Administrator.Administrators.First(x => x.Id == Tokens[token]);
+    }
+    
     public static void ValidateAdminOrClient(Guid token, Guid clientId)
     {
         if (!IsAdmin(token) && !IsClient(token, clientId))

@@ -26,4 +26,18 @@ public class AuthController : ControllerBase
         };
         return Task.FromResult<IActionResult>(Ok(obj));
     }
+
+    [HttpPost("info/{id}")]
+    public Task<IActionResult> GetUserInfo([FromBody] Guid id, [FromQuery] Guid token)
+    {
+        var isAdmin = AuthService.IsAdmin(token);
+        
+        if (!isAdmin && !AuthService.IsClient(token, id))
+        {
+            return Task.FromResult<IActionResult>(Unauthorized());
+        }
+        
+        var clientName = Client.Clients.First(x => x.Id == id).FullName;
+        return Task.FromResult<IActionResult>(Ok(new { Name = clientName }));
+    }
 }
