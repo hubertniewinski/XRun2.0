@@ -13,4 +13,42 @@
     0px 67px 40px 0px rgba(77, 77, 77, 0.05),
     0px 30px 30px 0px rgba(77, 77, 77, 0.09),
     0px 7px 16px 0px rgba(77, 77, 77, 0.1);
+  width: fit-content;
+
+  .main-data-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 6px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    border-radius: 12px;
+    background: #f9f9f9;
+
+    p {
+      color: #525f7d;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 100%; /* 12px */
+    }
+
+    .p-datatable .p-datatable-thead > tr > th {
+        padding: 4px 4px;
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    .p-datatable .p-datatable-thead > tr > th {
+        padding: 8px 12px;
+
+
+    }
+  }
+}
+
+.p-button {
+    width: 100%;
 }
