@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "XRun"
+  "defaultProject": "XRun",
+  "cli": {
+    "analytics": false
+  }
 }
