@@ -24,42 +24,45 @@ public class Seed
         
         var client = new Client("John", "Doe", 
             new DateTime(1995, 05, 25), true, null, 
-            new Localization("Ottawa", "Canada"));
+            new Localization("Ottawa", "Canada"), "john.doe", "password");
         Client.AddClient(client);
         
         var client2 = new Client("Jane", "Doe", 
             new DateTime(1998, 07, 15), false, null, 
-            new Localization("Toronto", "Canada"));
+            new Localization("Toronto", "Canada"), "jane.doe", "password");
         Client.AddClient(client2);
         
         var client3 = new Client("Alice", "Smith", 
             new DateTime(1990, 01, 30), false, null, 
-            new Localization("Vancouver", "Canada"));
+            new Localization("Vancouver", "Canada"), "alice.smith", "password");
         Client.AddClient(client3);
 
         var client4 = new Client("Bob", "Johnson", 
             new DateTime(1985, 11, 20), true, null, 
-            new Localization("Montreal", "Canada"));
+            new Localization("Montreal", "Canada"), "bob.johnson", "password");
         Client.AddClient(client4);
 
         var client5 = new Client("Charlie", "Brown", 
             new DateTime(1992, 03, 15), true, null, 
-            new Localization("Calgary", "Canada"));
+            new Localization("Calgary", "Canada"), "charlie.brown", "password");
         Client.AddClient(client5);
         
         var client6 = new Client("Carlos", "Gomez",
             new DateTime(1987, 04, 12), true, null,
-            new Localization("Madrid", "Spain"));
+            new Localization("Madrid", "Spain"), "carlos.gomez", "password");
         Client.AddClient(client6);
 
         var client7 = new Client("Sophie", "Martin",
             new DateTime(1992, 06, 18), false, null,
-            new Localization("Paris", "France"));
+            new Localization("Paris", "France"), "sophie.martin", "password");
         Client.AddClient(client7);
 
         var client8 = new Client("Luca", "Rossi",
             new DateTime(1990, 09, 30), true, null,
-            new Localization("Rome", "Italy"));
+            new Localization("Rome", "Italy"), "luca.rossi", "password");
         Client.AddClient(client8);
+        
+        var admin = new Administrator("admin", "admin");
+        Administrator.AddAdministrator(admin);
     }
 }

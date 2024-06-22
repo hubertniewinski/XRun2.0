@@ -19,13 +19,26 @@
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/clients']"
-            >Get clients</a
-            >
-          </li>
-        </ul>
+        <ng-container *ngIf="authService.isLoggedIn(); else login">
+          <ul *ngIf="authService.isAdmin()" class="navbar-nav flex-grow">
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/clients']"
+              >Get clients</a
+              >
+            </li>
+          </ul>
+          <ul *ngIf="!authService.isAdmin()" class="navbar-nav flex-grow">
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a style="cursor: pointer;" class="nav-link text-dark" (click)="navigateToAssignedChats()"
+              >Get assigned chats</a
+              >
+            </li>
+          </ul>
+            Hi {{ authService.getName() }}!
+        </ng-container>
+        <ng-template #login>
+          <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
+        </ng-template>
       </div>
     </div>
   </nav>

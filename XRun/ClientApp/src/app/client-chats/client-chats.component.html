@@ -1,17 +1,19 @@
-<p-table [value]="assignedChats" styleClass="p-datatable-striped">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Type</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-chatType>
-    <tr>
-      <td>{{ chatType }}</td>
-    </tr>
-  </ng-template>
-</p-table>
+<div *ngIf="hasViewPermission">
+  <p-table [value]="assignedChats" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Type</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-chatType>
+      <tr>
+        <td>{{ chatType }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
-<p-button (click)="showDialog()" label="Assign new chat" />
+  <p-button *ngIf="hasAssignChatPermission" (click)="showDialog()" label="Assign new chat"/>
+</div>
 
 <p-dialog
   [modal]="true"
@@ -54,7 +56,6 @@
     inputId="autocomplete-chats"
   />
 
-
   <div style="color: red" *ngIf="error" class="error-message">
     {{ error }}
   </div>
@@ -72,5 +73,3 @@
     />
   </div>
 </p-dialog>
-
-<p-toast/>
