@@ -104,7 +104,8 @@ export class ClientChatsComponent implements OnInit {
       }, { headers })
     .subscribe(
       (result) => {
-        this.messageService.add({severity:'success', summary:'Success', detail:'Chat assigned successfully', life: 1000000});
+        const detail = chatType + ' successfully assigned';
+        this.messageService.add({severity:'success', summary:'Success', detail:detail, life: 1000000});
         this.visible = false;
         this.loadDetails();
       },

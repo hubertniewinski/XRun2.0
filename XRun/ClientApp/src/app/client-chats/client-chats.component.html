@@ -1,4 +1,5 @@
 <div *ngIf="hasViewPermission">
+  Assigned chats {{ assignedChats.length }}
   <p-table [value]="assignedChats" styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
       <tr>
