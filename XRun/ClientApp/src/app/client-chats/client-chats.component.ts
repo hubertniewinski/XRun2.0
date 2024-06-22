@@ -17,12 +17,12 @@ export class ClientChatsComponent implements OnInit {
     private readonly messageService: MessageService,
     private readonly authService: AuthService,
     private readonly router: Router
-  ) {}
+  ) { }
 
   id: string | null = null;
 
   assignedChats: string[] = [];
-  
+
   availableChats: any[] | undefined;
   filteredChats: any[] | undefined;
   selectedChat: any | undefined;
@@ -31,8 +31,10 @@ export class ClientChatsComponent implements OnInit {
   hasViewPermission: boolean = false;
   hasAssignChatPermission: boolean = false;
 
+  clientName: string | undefined;
+
   ngOnInit(): void {
-    if(!this.authService.isLoggedIn()) {
+    if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
     }
@@ -41,19 +43,30 @@ export class ClientChatsComponent implements OnInit {
       this.hasViewPermission = this.authService.isAdmin() || this.authService.getId() == this.id;
       this.hasAssignChatPermission = this.authService.isAdmin();
 
+      if (this.hasViewPermission) {
+        this.http
+          .get<ClientInfo>(this.baseUrl + 'api/auth/info/' + this.id + '?token=' + this.authService.getToken())
+          .subscribe(
+            (result) => {
+              this.clientName = result.name;
+            },
+            (error) => console.error(error)
+          );
+      }
+
       this.loadDetails();
     });
   }
 
   loadDetails() {
     this.http
-    .get<string[]>(this.baseUrl + 'api/clients/' + this.id + '/assignedChats?token=' + this.authService.getToken())
-    .subscribe(
-      (result) => {
-        this.assignedChats = result;
-      },
-      (error) => console.error(error)
-    );
+      .get<string[]>(this.baseUrl + 'api/clients/' + this.id + '/assignedChats?token=' + this.authService.getToken())
+      .subscribe(
+        (result) => {
+          this.assignedChats = result;
+        },
+        (error) => console.error(error)
+      );
   }
 
   showDialog() {
@@ -62,18 +75,18 @@ export class ClientChatsComponent implements OnInit {
     this.error = undefined;
 
     this.http
-    .get<string[]>(this.baseUrl + 'api/aichats/availableChats?token=' + this.authService.getToken())
-    .subscribe(
-      (result) => {
-        this.availableChats = result.map(x => ({
-          label: x,
-          value: x
-        }));
-      },
-      (error) => {
-        this.messageService.add({severity:'error', summary:'Error', detail:error.error});
-      }
-    );
+      .get<string[]>(this.baseUrl + 'api/aichats/availableChats?token=' + this.authService.getToken())
+      .subscribe(
+        (result) => {
+          this.availableChats = result.map(x => ({
+            label: x,
+            value: x
+          }));
+        },
+        (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error });
+        }
+      );
   }
 
   filterChat(event: AutoCompleteCompleteEvent) {
@@ -97,26 +110,30 @@ export class ClientChatsComponent implements OnInit {
     const chatType = this.selectedChat.value;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     this.http
-    .post<string[]>(this.baseUrl + 'api/clients/assignChat/' + this.id, 
-      {
-        Token: this.authService.getToken(),
-        ChatType: chatType
-      }, { headers })
-    .subscribe(
-      (result) => {
-        const detail = chatType + ' successfully assigned';
-        this.messageService.add({severity:'success', summary:'Success', detail:detail, life: 1000000});
-        this.visible = false;
-        this.loadDetails();
-      },
-      (error) => {
-        this.error = error.error;
-      }
-    );
+      .post<string[]>(this.baseUrl + 'api/clients/assignChat/' + this.id,
+        {
+          Token: this.authService.getToken(),
+          ChatType: chatType
+        }, { headers })
+      .subscribe(
+        (result) => {
+          const detail = chatType + ' successfully assigned';
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: detail, life: 1000000 });
+          this.visible = false;
+          this.loadDetails();
+        },
+        (error) => {
+          this.error = error.error;
+        }
+      );
   }
 }
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
+}
+
+interface ClientInfo {
+  name: string;
 }
