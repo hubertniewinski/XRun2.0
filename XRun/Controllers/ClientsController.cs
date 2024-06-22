@@ -15,6 +15,7 @@ public class ClientsController : ControllerBase
         
         var clients = Client.Clients;
         var result = clients.Select(x => new ClientDashboardDto(x.Id, x.FullName, x.AIChats.Count)).ToList();
+        
         return Task.FromResult<IActionResult>(Ok(result));
     }
     
@@ -30,6 +31,7 @@ public class ClientsController : ControllerBase
         }
         
         var chatTypes = client.AIChats.Select(x => x.Type).ToList();
+        
         return Task.FromResult<IActionResult>(Ok(chatTypes));
     }
     
@@ -57,6 +59,8 @@ public class ClientsController : ControllerBase
         }
         
         admin.AssignChat(client, chat);
+        
+        Seed.Seed.Save();
         return Task.FromResult<IActionResult>(Ok());
     }
 }

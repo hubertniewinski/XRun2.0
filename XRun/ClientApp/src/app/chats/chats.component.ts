@@ -4,18 +4,18 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-clients',
-  templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.scss']
+  selector: 'app-chats',
+  templateUrl: './chats.component.html',
+  styleUrls: ['./chats.component.css']
 })
-export class ClientsComponent implements OnInit {
-  public clients: ClientDashboardDto[] = [];
-
+export class ChatsComponent implements OnInit {
   constructor(private readonly http: HttpClient,
     @Inject('BASE_URL') private readonly baseUrl: string,
     private readonly router: Router,
     public readonly authService: AuthService) { }
 
+  chatAssignments: ChatAssignment[] = [];
+    
   ngOnInit(): void {
     if(!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
@@ -26,18 +26,13 @@ export class ClientsComponent implements OnInit {
       return;
     }
 
-    this.http.get<ClientDashboardDto[]>(this.baseUrl + 'api/clients?token=' + this.authService.getToken()).subscribe(result => {
-      this.clients = result;
+    this.http.get<ChatAssignment[]>(this.baseUrl + 'api/aichats/chatAssignments?token=' + this.authService.getToken()).subscribe(result => {
+      this.chatAssignments = result;
     }, error => console.error(error));
-  }
-
-  navigateToClient(clientId: string) {
-    this.router.navigate(["clients", clientId, "assignedChats"]);
   }
 }
 
-interface ClientDashboardDto {
-  id: string;
-  fullName: string;
-  chatsCount: number;
+interface ChatAssignment {
+  type: string;
+  clients: string[];
 }

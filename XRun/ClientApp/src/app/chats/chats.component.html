@@ -1,0 +1,25 @@
+<ng-container *ngIf="authService.isAdmin(); else unauthorized">
+    <p-table [value]="chatAssignments" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="type">Type <p-sortIcon field="type" /></th>
+          <th pSortableColumn="clients">Clients <p-sortIcon field="clients" /></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-chatAssignment>
+        <tr>
+          <td>{{ chatAssignment.type }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let client of chatAssignment.clients">
+                {{ client }}
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+  <ng-template #unauthorized>
+    UNAUTHORIZED
+  </ng-template>

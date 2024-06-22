@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { MessageService } from 'primeng/api';
+import { ChatsComponent } from './chats/chats.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MessageService } from 'primeng/api';
     NavMenuComponent,
     ClientsComponent,
     ClientChatsComponent,
-    LoginComponent
+    LoginComponent,
+    ChatsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -33,6 +35,7 @@ import { MessageService } from 'primeng/api';
     FormsModule,
     RouterModule.forRoot([
       { path: 'clients', component: ClientsComponent },
+      { path: 'chats', component: ChatsComponent },
       { path: 'clients/:id/assignedChats', component: ClientChatsComponent },
       { path: 'login', component: LoginComponent }
     ]),
