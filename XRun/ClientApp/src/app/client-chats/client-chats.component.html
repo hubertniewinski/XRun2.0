@@ -42,6 +42,7 @@
   <h1>Assign new chat</h1>
   <p>Select one chat from list below</p>
 
+  <label for="autocomplete-chats">Avaliable chats list</label>
   <p-autoComplete
     [(ngModel)]="selectedChat"
     [forceSelection]="true"
@@ -49,14 +50,21 @@
     [suggestions]="filteredChats"
     (completeMethod)="filterChat($event)"
     field="value"
+    placeholder="ex. Daily training"
+    inputId="autocomplete-chats"
   />
 
-  <div style="color: red" *ngIf="error">
+
+  <div style="color: red" *ngIf="error" class="error-message">
     {{ error }}
   </div>
 
-  <div class="button-container mt-2">
-    <p-button label="Go back" (onClick)="this.visible = false" />
+  <div class="button-container gap-2">
+    <p-button
+      label="Go back"
+      (onClick)="this.visible = false"
+      class="secondary-btn"
+    />
     <p-button
       [disabled]="!selectedChat"
       label="Assign selected chat"
@@ -65,4 +73,4 @@
   </div>
 </p-dialog>
 
-<p-toast />
+<p-toast/>

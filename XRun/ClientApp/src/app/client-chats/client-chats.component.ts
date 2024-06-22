@@ -87,7 +87,7 @@ export class ClientChatsComponent implements OnInit {
       JSON.stringify(chatType), { headers })
     .subscribe(
       (result) => {
-        this.messageService.add({severity:'success', summary:'Success', detail:'Chat assigned successfully'});
+        this.messageService.add({severity:'success', summary:'Success', detail:'Chat assigned successfully', life: 1000000});
         this.visible = false;
         this.loadDetails();
       },

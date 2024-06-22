@@ -47,7 +47,7 @@ public class ClientsController : ControllerBase
         var clientOwnsChat = client.AIChats.Any(x => x.Type == chatType);
         if (clientOwnsChat)
         {
-            return Task.FromResult<IActionResult>(Conflict("Client already owns this chat"));
+            return Task.FromResult<IActionResult>(Conflict("User already has this chat on list. Choose another one and then try again"));
         }
         
         client.AddAIChat(chat);
