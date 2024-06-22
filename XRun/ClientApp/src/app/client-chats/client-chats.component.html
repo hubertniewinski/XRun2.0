@@ -1,6 +1,12 @@
 <div class="wrapper">
   <div *ngIf="hasViewPermission">
+    <div class="user-name">
+      <div class="user-ph">
+      </div>
+      <div class="name">{{ clientName }}</div>
+    </div>
     <div class="main-data-wrapper flex-column gap-2">
+
       <p>Assigned chats {{ assignedChats.length }}</p>
 
       <p-table [value]="assignedChats" styleClass="p-datatable-striped">
@@ -11,18 +17,22 @@
         </ng-template>
         <ng-template pTemplate="body" let-chatType>
           <tr>
-            <td>{{ chatType }}</td>
+            <td>
+              <div class="dot"></div>
+              {{ chatType }}
+            </td>
           </tr>
         </ng-template>
       </p-table>
-  
     </div>
 
-    <p-button
-      *ngIf="hasAssignChatPermission"
-      (click)="showDialog()"
-      label="Assign new chat"
-    />
+    <div class="btn-wrapper">
+      <p-button
+        *ngIf="hasAssignChatPermission"
+        (click)="showDialog()"
+        label="Assign new chat"
+      />
+    </div>
   </div>
 
   <p-dialog
