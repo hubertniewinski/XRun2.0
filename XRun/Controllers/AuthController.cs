@@ -27,8 +27,8 @@ public class AuthController : ControllerBase
         return Task.FromResult<IActionResult>(Ok(obj));
     }
 
-    [HttpPost("info/{id}")]
-    public Task<IActionResult> GetUserInfo([FromBody] Guid id, [FromQuery] Guid token)
+    [HttpGet("info/{id}")]
+    public Task<IActionResult> GetUserInfo([FromRoute] Guid id, [FromQuery] Guid token)
     {
         var isAdmin = AuthService.IsAdmin(token);
         
