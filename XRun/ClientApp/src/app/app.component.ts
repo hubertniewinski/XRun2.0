@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,10 @@ import { AuthService } from './auth.service';
 export class AppComponent {
   title = 'app';
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  isLoginView() {
+    const path = this.router.url.split('/').pop();
+    return path == 'login';
+  }
 }

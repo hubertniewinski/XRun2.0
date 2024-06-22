@@ -1,6 +1,6 @@
 <body>
   <app-nav-menu></app-nav-menu>
-  <main class="container">
+  <main [ngClass]="isLoginView() ? 'login-content-container' : 'content-container'">
     <router-outlet></router-outlet>
   </main>
 </body>
