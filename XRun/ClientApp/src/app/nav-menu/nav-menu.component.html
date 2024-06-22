@@ -20,13 +20,22 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ng-container *ngIf="authService.isLoggedIn(); else login">
-          <ul *ngIf="authService.isAdmin()" class="navbar-nav flex-grow">
-            <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/clients']"
-              >Get clients</a
-              >
-            </li>
-          </ul>
+          <ng-container *ngIf="authService.isAdmin()">
+            <ul class="navbar-nav flex-grow">
+              <li class="nav-item" [routerLinkActive]="['link-active']">
+                <a class="nav-link text-dark" [routerLink]="['/clients']"
+                >Get clients</a
+                >
+              </li>
+            </ul>
+            <ul class="navbar-nav flex-grow">
+              <li class="nav-item" [routerLinkActive]="['link-active']">
+                <a class="nav-link text-dark" [routerLink]="['/chats']"
+                >Get chats</a
+                >
+              </li>
+            </ul>
+          </ng-container>
           <ul *ngIf="!authService.isAdmin()" class="navbar-nav flex-grow">
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a style="cursor: pointer;" class="nav-link text-dark" (click)="navigateToAssignedChats()"
