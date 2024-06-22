@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,22 @@ import { AuthService } from './auth.service';
 export class AppComponent {
   title = 'app';
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  getContainerClass() {
+    const path = this.getPath();
+
+    if(path == 'login'){
+      return 'login-content-container';
+    }
+    else if(path == '') {
+      return 'home-content-container';
+    }
+
+    return 'content-container';
+  }
+
+  private getPath() {
+    return this.router.url.split('/').pop();
+  }
 }
