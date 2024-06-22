@@ -2,8 +2,8 @@ namespace XRun.Models;
 
 public class HealthInformation
 {
-    public required decimal Height { get; set; }
-    public required decimal Weight { get; set; }
+    public decimal Height { get; set; }
+    public decimal Weight { get; set; }
     public decimal? BodyFatPercentage { get; set; }
     public decimal? LeanBodyMass { get; set; }
     public decimal? LactateThreshold { get; set; }
